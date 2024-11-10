@@ -31,7 +31,7 @@ Based on individual needs, various custom pages can be added, such as goal setti
 erDiagram
 
 Journal {
-    uuid journal_id PK
+    uuid id PK
     string name
     string description
     date created_at
@@ -40,9 +40,9 @@ Journal {
 Journal ||--o{ Log : contains
 
 Log {
-    uuid log_id PK
-    enum log_type
+    uuid id PK
     uuid journal_id FK
+    enum type
     string title
     string subtitle
     date created_at
@@ -51,17 +51,17 @@ Log {
 Log ||--|| LogType : is
 
 LogType {
-    enum log_type PK
+    enum type PK
     text description
 }
 
 Log ||--o{ Bullet : contains
 
 Bullet {
+    uuid id PK
     uuid log_id FK
-    uuid bullet_id PK
-    enum bullet_type
-    uuid parent_id
+    uuid parent_id FK "optional, if null, root bullet"
+    enum type
     text content
     enum status
     date created_at
@@ -70,7 +70,7 @@ Bullet {
 Bullet ||--|| BulletType : is
 
 BulletType {
-    enum bullet_type PK
+    enum type PK
     text description
 }
 
